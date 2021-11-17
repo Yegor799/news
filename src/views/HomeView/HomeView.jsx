@@ -24,5 +24,7 @@ export default function HomeView() {
 
   console.log(news);
 
-  return <div></div>;
+  return (
+    <ul>{news && news.data.articles.map(item => <li>{item.title}</li>)}</ul>
+  );
 }
