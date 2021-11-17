@@ -30,7 +30,7 @@ export default function HomeView({ news, loading }) {
   //   getNews();
   // }, []);
 
-  console.log(news);
+  // console.log(news);
 
   return (
     <>
