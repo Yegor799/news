@@ -14,6 +14,7 @@ const API_KEY = '6bcdc3a46d7345ad896a7e3e847ee377';
 function App() {
   const [news, setNews] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [filter, setFilter] = useState('');
 
   async function getNews() {
     try {
@@ -29,6 +30,10 @@ function App() {
     }
   }
 
+  const onInputChange = e => {
+    setFilter(e.target.value);
+  };
+
   useEffect(() => {
     getNews();
   }, []);
@@ -36,14 +41,16 @@ function App() {
   return (
     <div className="App">
       <Container>
-        <Header />
+        <Header onInputChange={onInputChange} />
 
         <Suspense fallback={<h1>LOADING...</h1>}>
           <Routes>
             <Route
               path="/"
               exact
-              element={<HomePage loading={loading} news={news} />}
+              element={
+                <HomePage loading={loading} news={news} filter={filter} />
+              }
             ></Route>
             <Route
               path="/articles/:articleId"

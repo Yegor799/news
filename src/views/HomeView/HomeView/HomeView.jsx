@@ -1,36 +1,14 @@
 import React from 'react';
 import './HomeViev.css';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
-const API_KEY = '6bcdc3a46d7345ad896a7e3e847ee377';
-
-export default function HomeView({ news, loading }) {
-  // const [news, setNews] = useState(null);
-  // const [loading, setLoading] = useState(false);
-
-  // async function getNews() {
-  //   try {
-  //     setLoading(true);
-  //     const response = await axios.get(
-  //       `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`,
-  //     );
-  //     setNews(response);
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   getNews();
-  // }, []);
-
-  // console.log(news);
+export default function HomeView({ news, loading, filter }) {
+  const getFilteredNews = () =>
+    news.data.articles.filter(item =>
+      item.title.toLowerCase().includes(filter.toLocaleLowerCase()),
+    );
 
   return (
     <>
@@ -47,10 +25,10 @@ export default function HomeView({ news, loading }) {
       )}
       <ul className="News">
         {news &&
-          news.data.articles.map(item => (
+          getFilteredNews().map(item => (
             <li key={item.title} className="News-item">
               <Link to={`/articles/${item.title}`}>
-                <h2>{item.title}</h2>
+                <h2 className="News-title">{item.title}</h2>
               </Link>
               <p>{item.description}</p>
             </li>

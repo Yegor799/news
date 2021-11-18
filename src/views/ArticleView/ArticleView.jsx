@@ -1,9 +1,24 @@
-import { NavLink, Route, useRouteMatch, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import './ArticleView.css';
 
 export default function ArticleView({ news }) {
-  // const { url, path } = useRouteMatch();
   const { articleId } = useParams();
-  console.log(articleId);
+  const data = localStorage.getItem('data');
+  localStorage.setItem('data', JSON.stringify(news));
 
-  return <div>hello world</div>;
+  const getArticle = () =>
+    news.data.articles.find(article => article.title === articleId);
+
+  const article = news ? getArticle() : JSON.parse(data);
+
+  return (
+    <>
+      {article && (
+        <div>
+          <h2 className="Article-title">{article.title}</h2>
+          <p className="Article-content">{article.description}</p>
+        </div>
+      )}
+    </>
+  );
 }
